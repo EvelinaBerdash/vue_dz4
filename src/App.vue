@@ -1,63 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <AddButton :onClick="popupToggle"></AddButton>
-    <List v-bind:list="costsList">
-      <template v-slot:head>
-        <h2>Мои расходы</h2>
-      </template>
-      <template v-slot:footer>
-        <h2>Good bye</h2>
-      </template>
-    </List>
-    <Form v-if="isPopupActive" :onAdd='onAdd'></Form>
+    <HomeView v-on:add="add" v-bind:categories="categories" v-bind:list='paymentsList'/>
   </div>
 </template>
 
 <script>
-import AddButton from './components/AddButton.vue'
-import Form from './components/Form.vue'
-import List from './components/List.vue'
+import HomeView from './views/HomeView.vue'
 import { mapMutations } from 'vuex'
 
 
 export default {
   name: 'App',
-  components: { AddButton, Form, List },
+  components: { HomeView }, 
   data() {
     return {
-      costsList: [],
-      isPopupActive: false,
-      nextId: 4,
+      categories: [
+       'food',
+       'transport',
+      ],
+      paymentsList: [
+      { id: 1, category: 'food', date: '12.09.2022 20:27', count: 1582 },
+      ]      
     }
   },
   methods: {
-    fetchData() {
-      return [
-        { id: 1, date: '12.09.2022', category: 'food', value: 1582 },
-        { id: 2, date: '15.09.2022', category: 'transport', value: 245 },
-        { id: 3, date: '20.09.2022', category: 'healthcare', value: 780 },
-      ]
-    },
-    popupToggle() {
-      this.isPopupActive = !this.isPopupActive
-    },
-    onAdd(data) {
-      // let nextId = costsList.map(function(cost),
-      this.costsList.push({
-        id: this.nextId++,
-        date: data.date,
-        category: data.category,
-        value: data.value
-      }),
-        mapMutations({
-          updatePayments: 'setPaymentsListData'
-        })
-      //console.log('child component said add', data)
+    add(formData) {
+      formData.date = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
+      this.paymentsList.push(Object.assign({}, formData))
     }
-  },
-  created() {
-    this.setPaymentsListData(this.updatePayments)
   }
 }
 </script>
