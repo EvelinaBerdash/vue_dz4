@@ -8,7 +8,7 @@
         <input v-model="formData.count" type="text" />
         <div class="btngroup">
             <button v-on:click="$emit('close')">Отмена</button>
-            <button v-on:click="$emit('add', formData)">Добавить</button>
+            <button v-on:click="add">Добавить</button>
         </div>
 
     </div>
@@ -17,15 +17,26 @@
 <script>
 export default {
     name: "Popup",
-    props: {
-        categories: Array
+    computed: {
+        categories() {
+            return this.$store.getters.getCategoriesList
+        }
     },
     data() {
         return {
             formData: {
-                category: this.categories[0],
+                category: '',
                 count: 0
             }
+        }
+    },
+    mounted() {
+        this.formData.category = this.categories[0]
+    },
+    methods: {
+        add() {
+            this.formData.date = new Date().toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" }),
+            this.$store.commit('addPaymentsList', Object.assign({}, this.formData))
         }
     }
 }

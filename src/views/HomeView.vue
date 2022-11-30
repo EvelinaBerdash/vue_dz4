@@ -2,8 +2,8 @@
     <div class="home">
         <img alt="Vue logo" src="../assets/logo.png">
         <button v-on:click="showPopup">Добавить</button>
-        <List v-bind:list="list"/>
-        <Popup v-on:add="(formData) => $emit('add', formData)" v-bind:categories="categories" v-if="isPopupActive" v-on:close="hidePopup"/>
+        <List />
+        <Popup v-if="isPopupActive" v-on:close="hidePopup"/>
     </div>
 </template>
 

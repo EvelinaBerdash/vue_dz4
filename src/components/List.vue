@@ -11,8 +11,10 @@
 <script>
     export default {
         name: 'List',
-        props: {
-            list: Array
+        computed: {
+            list() {
+                return this.$store.getters.getPaymentsList
+            }
         }
     }
 </script>
