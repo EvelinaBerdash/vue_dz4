@@ -19,7 +19,7 @@ export default {
     name: "Popup",
     computed: {
         categories() {
-           return this.$store.getters.getCategoriesList
+            return this.$store.getters.getCategoriesList
         }
     },
     data() {
@@ -35,8 +35,8 @@ export default {
     },
     methods: {
         add() {
-            this.formdata.date = new Date().toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" }),
-                this.$store.commit('addPayment', Object.assign({}, this.formData))
+            this.formData.date = new Date().toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" }),
+            this.$store.commit('addPaymentsList', Object.assign({}, this.formData))
         }
     }
 }
